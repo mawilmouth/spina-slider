@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.name        = "spina-image-slider"
   spec.version     = Spina::Image::Slider::VERSION
   spec.authors     = ["Michael Wilmouth"]
-  spec.email       = ["michael@actionvfx.com"]
-  spec.homepage    = "actionvfx.com"
+  spec.email       = ["wilmouthworks@gmail.com"]
+  spec.homepage    = "https://github.com/mawilmouth/spina-image-slider"
   spec.summary     = "Image Slider for Spina CMS"
   spec.license     = "MIT"
 
