@@ -1,4 +1,4 @@
-# Spina::Image::Slider
+# Spina::Slider
 Short description and motivation.
 
 ## Usage
@@ -8,7 +8,7 @@ How to use my plugin.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'spina-image-slider'
+gem 'spina-slider'
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ $ bundle
 
 Or install it yourself as:
 ```bash
-$ gem install spina-image-slider
+$ gem install spina-slider
 ```
 
 ## Contributing

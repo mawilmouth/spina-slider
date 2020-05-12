@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  mount Spina::Image::Slider::Engine => "/spina-image-slider"
+  mount Spina::Slider::Engine => "/spina-slider"
 end

@@ -1,5 +1,5 @@
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
     actioncable (6.0.3)
       actionpack (= 6.0.3)
@@ -129,7 +129,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  rails (~> 6.0.2, >= 6.0.2.1)
+  rails
 
 BUNDLED WITH
-   2.1.2
+   1.17.2

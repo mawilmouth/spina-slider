@@ -1,2 +1,2 @@
-Spina::Image::Slider::Engine.routes.draw do
+Spina::Slider::Engine.routes.draw do
 end
