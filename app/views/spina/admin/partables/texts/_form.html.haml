@@ -5,26 +5,5 @@
     - object_id = (ff.object.persisted? ? ff.object.object_id : "new_association_#{ff.object.object_id}").to_s + "_content"
     = ff.hidden_field :content, id: "#{object_id}_input", value: ff.object.content(fallback: false, default: nil)
     %trix-toolbar.clearfix{ id: "#{object_id}_toolbar", data: { trix_editor_id: "#{object_id}_editor" }}
-      .button-groups
-        .button-group
-          %button.button.button-small{ type: 'button', tabindex: -1, title: 'Before/After Image Slider', data: { trix_action: 'image-slider' }}
-            <|>
-      .trix-dialogs{data: {trix_dialogs: true}}
-        .trix-dialog.trix-dialog--image-slider{ data: { trix_dialog_attribute: 'image-slider', trix_dialog: 'image-slider'}}
-          .trix-dialog__link-fields.input-fields
-            .slider-preview
-              .img-slider.twentytwenty-container
-                %img.img.first{src: "#", alt: 'Top Photo', style: 'width: 100%;'}
-                %img.img.second{src: "#", alt: 'Bottom Photo', style: 'height: 100%; width: 100%;'}
-            .slider-markup
-              %span.slider-show 
-              .img-slider
-                %img.img.first{src: "#", style: 'width: 100%;'}
-                %img.img.second{src: "#", style: 'height: 100%; width: 100%;'}
-            %input{type: 'text', class: 'slider-name', placeholder: 'Name this slider'}
-            .button-group
-              .first-slider-file.button Top Image
-              .second-slider-file.button Bottom Image
-              .add-slider.button Add to content
-
+      = render partial: 'spina/admin/partables/texts/custom_buttons'
     %trix-editor.text-input.trix-content{ input: "#{object_id}_input", toolbar: "#{object_id}_toolbar", id: "#{object_id}_editor" }
