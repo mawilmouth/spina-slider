@@ -1,7 +1,9 @@
-require "spina/slider/engine"
+require "spina/slider/version"
 
 module Spina
   module Slider
-    # Your code goes here...
+    class Error < StandardError; end
+    
+    class Engine < ::Rails::Engine; end
   end
 end
