@@ -1,7 +1,3 @@
-= render partial: 'spina/admin/partables/texts/jquery.event.move'
-= render partial: 'spina/admin/partables/texts/twentytwenty-no-compass'
-= render partial: 'spina/admin/partables/texts/jquery.twentytwenty'
-
 :javascript
   class TrixAttachmentSlider {
     selectFirstImage(e) {
@@ -48,9 +44,8 @@
         var markup = slider_markup.html();
         var attachment = new Trix.Attachment({content: markup, contentType: 'image-slider'});
         currentEditor.editor.insertAttachment(attachment);
-        for (var elem in $(this).closest('.input-fields').find('.slider-preview, .slider-markup').find('.img')) {
-          $(elem).attr('src', '#');
-        }
+        slider_markup.find('.img').attr('src', '#');
+        slider_markup.siblings('.slider-preview').find('.img').attr('src', '#');
         slider_name.val('');
       }
     }

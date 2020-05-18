@@ -1,3 +1,7 @@
+= javascript_include_tag 'slider'
+= stylesheet_link_tag 'twentytwenty-no-compass'
+= stylesheet_link_tag 'slider'
+
 .horizontal-form-label
   = f.object.title
 .horizontal-form-content
@@ -8,4 +12,4 @@
       = render partial: 'spina/admin/partables/texts/custom_buttons'
     %trix-editor.text-input.trix-content{ input: "#{object_id}_input", toolbar: "#{object_id}_toolbar", id: "#{object_id}_editor" }
 
-= render partial: 'spina/admin/partables/texts/slider_scripts', locals: { editor_id: object_id}
+= render partial: 'spina/admin/partables/texts/slider_js', locals: { editor_id: object_id}
