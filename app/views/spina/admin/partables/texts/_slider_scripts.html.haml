@@ -1,3 +1,7 @@
+= render partial: 'spina/admin/partables/texts/jquery.event.move'
+= render partial: 'spina/admin/partables/texts/twentytwenty-no-compass'
+= render partial: 'spina/admin/partables/texts/jquery.twentytwenty'
+
 :javascript
   class TrixAttachmentSlider {
     selectFirstImage(e) {
@@ -11,30 +15,54 @@
       $.get("#{ Spina::Engine.routes.url_helpers.admin_media_picker_path }" + "?trix_toolbar_id=" + toolbar_id + "&slider=second");
     }
     photoAssignFirst(e, url) {
+      currentEditor = this;
       var current_preview = $('.btn-selected').closest('.button-group').siblings('.slider-preview');
       current_preview.find('.img.first').attr('src', url);
       current_preview.siblings('.slider-markup').find('.img.first').attr('src', url);
-      //current_preview.trigger('preview-slider');
-      alert('first');
+      current_preview.trigger('preview-slider');
+      var listItem = current_preview.siblings('.slider-todo').find('[data-slider-list=top]');
+      if (!listItem.hasClass('done')) listItem.addClass('done');
       $('.btn-selected').removeClass('btn-selected');
     }
     photoAssignSecond(e, url) {
+      currentEditor = this;
       var current_preview = $('.btn-selected').closest('.button-group').siblings('.slider-preview');
       current_preview.find('.img.second').attr('src', url);
       current_preview.siblings('.slider-markup').find('.img.second').attr('src', url);
       current_preview.trigger('preview-slider');
-      alert('second');
+      var listItem = current_preview.siblings('.slider-todo').find('[data-slider-list=bottom]');
+      if (!listItem.hasClass('done')) listItem.toggleClass('done');
       $('.btn-selected').removeClass('btn-selected');
     }
     previewSlider(e) {
       $(this).find('.img-slider').twentytwenty();
     }
+    addSlider(e) {
+      var slider_name = $(this).closest('.button-group').siblings('input.slider-name');
+      var name = slider_name.val();
+      if (name == '') {
+        alert('Please name the slider before inserting...');
+      } else {
+        var slider_markup = $(this).closest('.button-group').siblings('.slider-markup');
+        slider_markup.find('.slider-show').text(name);
+        var markup = slider_markup.html();
+        var attachment = new Trix.Attachment({content: markup, contentType: 'image-slider'});
+        currentEditor.editor.insertAttachment(attachment);
+        for (var elem in $(this).closest('.input-fields').find('.slider-preview, .slider-markup').find('.img')) {
+          $(elem).attr('src', '#');
+        }
+        slider_name.val('');
+      }
+    }
   }
 
   var sliderController = new TrixAttachmentSlider;
+  var currentEditor;
 
   $('.first-slider-file').on('click', sliderController.selectFirstImage);
   $('.second-slider-file').on('click', sliderController.selectSecondImage);
   $('trix-editor').on('first-photo-selected', sliderController.photoAssignFirst);
   $('trix-editor').on('second-photo-selected', sliderController.photoAssignSecond);
   $('.slider-preview').on('preview-slider', sliderController.previewSlider);
+  $('.add-slider').on('click', sliderController.addSlider);
+
