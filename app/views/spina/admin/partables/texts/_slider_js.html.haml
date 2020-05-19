@@ -1,63 +1,27 @@
 :javascript
-  class TrixAttachmentSlider {
-    selectFirstImage(e) {
-      var toolbar_id = $(this).closest('trix-toolbar').attr('id');
-      $(this).addClass('btn-selected');
-      $.get("#{ Spina::Engine.routes.url_helpers.admin_media_picker_path }" + "?trix_toolbar_id=" + toolbar_id + "&slider=first");
-    }
-    selectSecondImage(e) {
-      var toolbar_id = $(this).closest('trix-toolbar').attr('id');
-      $(this).addClass('btn-selected');
-      $.get("#{ Spina::Engine.routes.url_helpers.admin_media_picker_path }" + "?trix_toolbar_id=" + toolbar_id + "&slider=second");
-    }
-    photoAssignFirst(e, url) {
-      currentEditor = this;
-      var current_preview = $('.btn-selected').closest('.button-group').siblings('.slider-preview');
-      current_preview.find('.img.first').attr('src', url);
-      current_preview.siblings('.slider-markup').find('.img.first').attr('src', url);
-      current_preview.trigger('preview-slider');
-      var listItem = current_preview.siblings('.slider-todo').find('[data-slider-list=top]');
-      if (!listItem.hasClass('done')) listItem.addClass('done');
-      $('.btn-selected').removeClass('btn-selected');
-    }
-    photoAssignSecond(e, url) {
-      currentEditor = this;
-      var current_preview = $('.btn-selected').closest('.button-group').siblings('.slider-preview');
-      current_preview.find('.img.second').attr('src', url);
-      current_preview.siblings('.slider-markup').find('.img.second').attr('src', url);
-      current_preview.trigger('preview-slider');
-      var listItem = current_preview.siblings('.slider-todo').find('[data-slider-list=bottom]');
-      if (!listItem.hasClass('done')) listItem.toggleClass('done');
-      $('.btn-selected').removeClass('btn-selected');
-    }
-    previewSlider(e) {
-      $(this).find('.img-slider').twentytwenty();
-    }
-    addSlider(e) {
-      var slider_name = $(this).closest('.button-group').siblings('input.slider-name');
-      var name = slider_name.val();
-      if (name == '') {
-        alert('Please name the slider before inserting...');
-      } else {
-        var slider_markup = $(this).closest('.button-group').siblings('.slider-markup');
-        slider_markup.find('.slider-show').text(name);
-        var markup = slider_markup.html();
-        var attachment = new Trix.Attachment({content: markup, contentType: 'image-slider'});
-        currentEditor.editor.insertAttachment(attachment);
-        slider_markup.find('.img').attr('src', '#');
-        slider_markup.siblings('.slider-preview').find('.img').attr('src', '#');
-        slider_name.val('');
-      }
-    }
+  function selectFirstImage(e) {
+    var toolbar_id = $(this).closest('trix-toolbar').attr('id');
+    $(this).addClass('btn-selected');
+    $.get("#{ Spina::Engine.routes.url_helpers.admin_media_picker_path }" + "?trix_toolbar_id=" + toolbar_id + "&slider=first");
   }
-
-  var sliderController = new TrixAttachmentSlider;
-  var currentEditor;
-
-  $('.first-slider-file').on('click', sliderController.selectFirstImage);
-  $('.second-slider-file').on('click', sliderController.selectSecondImage);
-  $('trix-editor').on('first-photo-selected', sliderController.photoAssignFirst);
-  $('trix-editor').on('second-photo-selected', sliderController.photoAssignSecond);
-  $('.slider-preview').on('preview-slider', sliderController.previewSlider);
-  $('.add-slider').on('click', sliderController.addSlider);
-
+  function selectSecondImage(e) {
+    var toolbar_id = $(this).closest('trix-toolbar').attr('id');
+    $(this).addClass('btn-selected');
+    $.get("#{ Spina::Engine.routes.url_helpers.admin_media_picker_path }" + "?trix_toolbar_id=" + toolbar_id + "&slider=second");
+  }
+  function createListeners() {
+    $('.first-slider-file').on('click', selectFirstImage);
+    $('.second-slider-file').on('click', selectSecondImage);
+    $('trix-editor').on('first-photo-selected', sliderController.photoAssignFirst);
+    $('trix-editor').on('second-photo-selected', sliderController.photoAssignSecond);
+    $('.slider-preview').on('preview-slider', sliderController.previewSlider);
+    $('.add-slider').on('click', sliderController.addSlider);
+    $('.add-slider').on('click', sliderController.clearList);
+  }
+  $(document).on("trix-initialize", function(event) {
+    if ($('trix-toolbar').find('.trix-button--text.image-slider').length == 0) {
+      $('.trix-button-group--text-tools').append(customTrixTools.sliderBtn);
+      $('.trix-dialogs').append(customTrixTools.sliderDialog);
+      createListeners();
+    }
+  });
