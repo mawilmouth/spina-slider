@@ -19,14 +19,14 @@ And then execute:
 
 Add these lines to your application.html.erb 
 
-```ruby
+```
 <%= javascript_include_tag 'slider'%>
 <%= stylesheet_link_tag 'twentytwenty-no-compass'%>
 ```
 
 Add these lines to /app/assets/config/manifest.js
 
-```ruby
+```
 //= link twentytwenty-no-compass.css
 //= link slider.css
 //= link slider.js
