@@ -1,28 +1,36 @@
 # Spina::Slider
 
+This gem adds a [TwentyTwenty](https://zurb.com/playground/twentytwenty) before/after image slider to text
+fields for [SpinaCMS](https://github.com/SpinaCMS/Spina).
+
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'spina-slider'
+gem 'spina-slider', git: 'git://github.com/mawilmouth/spina-slider.git'
 ```
 
 And then execute:
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install spina-slider
+    $ bundle install
 
 ## Usage
 
-TODO: Write usage instructions here
+Add these lines to your application.html.erb 
 
-## Contributing
+```ruby
+<%= javascript_include_tag 'slider'%>
+<%= stylesheet_link_tag 'twentytwenty-no-compass'%>
+```
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/spina-slider. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Add these lines to /app/assets/config/manifest.js
+
+```ruby
+//= link twentytwenty-no-compass.css
+//= link slider.css
+//= link slider.js
+```
 
 ## License
 
