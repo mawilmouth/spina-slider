@@ -1,3 +1,92 @@
+class TrixAttachmentSlider {
+	photoAssignFirst(e, url) {
+		currentEditor = this;
+		var current_preview = $('.btn-selected').closest('.button-group').siblings('.slider-preview');
+		current_preview.find('.img.first').attr('src', url);
+		current_preview.siblings('.slider-markup').find('.img.first').attr('src', url);
+		current_preview.trigger('preview-slider');
+		var listItem = current_preview.siblings('.slider-todo').find('[data-slider-list=top]');
+		if (!listItem.hasClass('done')) listItem.addClass('done');
+		$('.btn-selected').removeClass('btn-selected');
+	}
+	photoAssignSecond(e, url) {
+		currentEditor = this;
+		var current_preview = $('.btn-selected').closest('.button-group').siblings('.slider-preview');
+		current_preview.find('.img.second').attr('src', url);
+		current_preview.siblings('.slider-markup').find('.img.second').attr('src', url);
+		current_preview.trigger('preview-slider');
+		var listItem = current_preview.siblings('.slider-todo').find('[data-slider-list=bottom]');
+		if (!listItem.hasClass('done')) listItem.toggleClass('done');
+		$('.btn-selected').removeClass('btn-selected');
+	}
+	previewSlider(e) {
+		$(this).find('.img-slider').twentytwenty();
+	}
+	addSlider(e) {
+		var slider_name = $(this).closest('.button-group').siblings('input.slider-name');
+		var name = slider_name.val();
+		if (name == '') {
+			alert('Please name the slider before inserting...');
+		} else {
+			var slider_markup = $(this).closest('.button-group').siblings('.slider-markup');
+			slider_markup.find('.slider-show').text(name);
+			var markup = slider_markup.html();
+			var attachment = new Trix.Attachment({content: markup, contentType: 'image-slider'});
+			currentEditor.editor.insertAttachment(attachment);
+			slider_markup.find('.img').attr('src', '#');
+			slider_markup.siblings('.slider-preview').find('.img').attr('src', '#');
+			slider_name.val('');
+		}
+	}
+	clearList(e) {
+		var topListItem = $(this).closest('.button-group').siblings('.slider-todo').find('[data-slider-list=top]');
+		var bottomListItem = topListItem.siblings('[data-slider-list=bottom]');
+		if (topListItem.hasClass('done')) topListItem.removeClass('done');
+		if (bottomListItem.hasClass('done')) bottomListItem.removeClass('done');
+	}
+}
+
+const customTrixTools = {
+	sliderBtn: '<button class="trix-button trix-button--text image-slider"' +
+						 'data-trix-action="image-slider" tabindex="-1" title="Before/After Image Slider"' +
+						 'type="button"><|></button>',
+
+	sliderDialog: '<div class="trix-dialogs" data-trix-dialogs=true>' +
+									'<div class="trix-dialog trix-dialog--image-slider"' +
+									'data-trix-dialog-attribute="image-slider" data-trix-dialog="image-slider">' +
+										'<div class="trix-dialog__link-fields input-fields slider-fields">' +
+											'<ul class="slider-todo">' +
+												'<li data-slider-list="top">Select Top Image</li>' +
+												'<li data-slider-list="bottom">Select Bottom Image</li>' +
+											'</ul>' +
+											'<div class="slider-preview">' +
+												'<div class="img-slider">' +
+													'<img class="img first" src="#" alt="Top Photo" style="width:100%;"/>' +
+													'<img class="img second" src="#" alt="Bottom Photo" style="width:100%;height:100%"/>' +
+												'</div>' +
+											'</div>' +
+											'<div class="slider-markup">' +
+												'<span class="slider-show"></span>' +
+												'<div class="img-slider">' +
+													'<img class="img first" src="#" style="width:100%;"/>' +
+													'<img class="img second" src="#" style="width:100%;height:100%"/>' +
+												'</div>' +
+											'</div>' +
+											'<input type="text" class="slider-name" placeholder="Name this slider">' +
+											'<div class="button-group">' +
+												'<div class="first-slider-file button">Top Image</div>' +
+												'<div class="second-slider-file button">Bottom Image</div>' +
+												'<div class="add-slider button">Add to content</div>' +
+											'</div>' +
+										'</div>' +
+									'</div>' +
+								'</div>'
+};
+
+var sliderController = new TrixAttachmentSlider;
+var currentEditor;
+
+
 /*
 
 
