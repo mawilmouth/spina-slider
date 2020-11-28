@@ -8,7 +8,7 @@ fields for [SpinaCMS](https://github.com/SpinaCMS/Spina).
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'spina-slider', git: 'git://github.com/mawilmouth/spina-slider.git'
+gem 'spina-slider'
 ```
 
 And then execute:
